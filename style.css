@@ -8,8 +8,9 @@
 
 body {
   font-family: Roboto, Helvetica, sans-serif;
-  /* background: #1e48aa; */
   padding: 0 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 main {
   max-width: 375px;
@@ -18,7 +19,7 @@ main {
   border-radius: 10px;
   padding: 30px 10px;
   color: #212121;
-  background-color: #f1f1f1;
+  background-color: #eee8e8;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
   text-align: center;
   position: relative;
