@@ -27,29 +27,19 @@ fetch("conf.json")
     getWeatherData();
 
     // Update weather data every hour
-    setInterval(() => {
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(`Weather in ${city}: ${data.weather[0].main}`);
-          console.log(`Weather in ${city}: ${data.weather[0].description}`);
-          console.log(`Weather in ${city}: ${data.main.temp}`);
-          console.log(`Weather in ${city}: ${data.wind.speed} m/s`);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }, 3600000); // 3600000 ms = 1 hour
-
-    const description = document.querySelector(".description");
-    const temperature = document.querySelector(".temperature");
-    const infoIcon = document.querySelector(".info-icon");
+    setInterval(getWeatherData, 3600000); // 3600000 ms = 1 hour
 
     function populateUI(data) {
+      const description = document.querySelector(".description");
+      const temperature = document.querySelector(".temperature");
+      const infoIcon = document.querySelector(".info-icon");
+      const windSpeed = document.querySelector(".wind-speed");
+      const humidity = document.querySelector(".humidity");
+
       description.textContent = data.weather[0].description;
-      temperature.textContent = `${data.main.temp}°`;
+      temperature.textContent = `${data.main.temp}°C`;
+      windSpeed.textContent = `Vent: ${data.wind.speed} m/s`;
+      humidity.textContent = `Humidité: ${data.main.humidity}%`;
       infoIcon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
       infoIcon.style.width = "150px";
       loader.classList.remove("active");
