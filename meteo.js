@@ -5,6 +5,7 @@ fetch("conf.json")
   .then((response) => response.json())
   .then((data) => {
     const city = data.city;
+    const country = data.country;
 
     const apiKey = "523d773f11d9f264c85fc0c42f94ddf3"; // replace with your actual API key
 
@@ -14,7 +15,11 @@ fetch("conf.json")
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`
         );
         if (!response.ok) {
-          throw new Error(`Error ${response.status}, ${response.statusText}`);
+          if (response.status === 404) {
+            throw new Error(`La ville '${city}' n'a pas été trouvée.`);
+          } else {
+            throw new Error(`Error ${response.status}, ${response.statusText}`);
+          }
         }
         const weatherData = await response.json();
         populateUI(weatherData);
@@ -30,12 +35,16 @@ fetch("conf.json")
     setInterval(getWeatherData, 3600000); // 3600000 ms = 1 hour
 
     function populateUI(data) {
+      const cityName = document.querySelector(".city-name");
+      const countryName = document.querySelector(".country-name");
       const description = document.querySelector(".description");
       const temperature = document.querySelector(".temperature");
       const infoIcon = document.querySelector(".info-icon");
       const windSpeed = document.querySelector(".wind-speed");
       const humidity = document.querySelector(".humidity");
 
+      cityName.textContent = city;
+      countryName.textContent = country;
       description.textContent = data.weather[0].description;
       temperature.textContent = `${data.main.temp}°C`;
       windSpeed.textContent = `Vent: ${data.wind.speed} m/s`;
