@@ -32,8 +32,6 @@ fetch("conf.json")
     getWeatherData();
 
     // Update weather data every hour
-    setInterval(getWeatherData, 3600000); // 3600000 ms = 1 hour
-
     function populateUI(data) {
       const cityName = document.querySelector(".city-name");
       const countryName = document.querySelector(".country-name");
@@ -46,13 +44,19 @@ fetch("conf.json")
       cityName.textContent = city;
       countryName.textContent = country;
       description.textContent = data.weather[0].description;
-      temperature.textContent = `${data.main.temp}°C`;
+      temperature.textContent = `${Math.round(data.main.temp)}°C`;
       windSpeed.textContent = `Vent: ${data.wind.speed} m/s`;
       humidity.textContent = `Humidité: ${data.main.humidity}%`;
       infoIcon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
       infoIcon.style.width = "150px";
+      document.body.style.backgroundImage =
+        "url('https://source.unsplash.com/1600x900/?" +
+        data.weather[0].main +
+        "')";
       loader.classList.remove("active");
     }
+
+    setInterval(getWeatherData, 3600000); // 3600000 ms = 1 hour
   })
   .catch((error) => {
     console.error(error);
