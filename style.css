@@ -9,6 +9,7 @@
 body {
   font-family: Roboto, Helvetica, sans-serif;
   padding: 0 10px;
+  background-color: rgb(233, 229, 223);
   background-size: cover;
   background-repeat: no-repeat;
 }

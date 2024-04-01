@@ -16,6 +16,8 @@ fetch("conf.json")
         );
         if (!response.ok) {
           if (response.status === 404) {
+            const cityName = document.querySelector(".city-name");
+            cityName.textContent = `La ville '${city}' n'a pas été trouvée.`;
             throw new Error(`La ville '${city}' n'a pas été trouvée.`);
           } else {
             throw new Error(`Error ${response.status}, ${response.statusText}`);
@@ -45,7 +47,7 @@ fetch("conf.json")
       countryName.textContent = country;
       description.textContent = data.weather[0].description;
       temperature.textContent = `${Math.round(data.main.temp)}°C`;
-      windSpeed.textContent = `Vent: ${data.wind.speed} m/s`;
+      windSpeed.textContent = `Vent: ${data.wind.speed * 3.6} km/h`;
       humidity.textContent = `Humidité: ${data.main.humidity}%`;
       infoIcon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
       infoIcon.style.width = "150px";
