@@ -21,6 +21,7 @@ fetch("conf.json")
             throw new Error(`La ville '${city}' n'a pas été trouvée.`);
           } else {
             throw new Error(`Error ${response.status}, ${response.statusText}`);
+            
           }
         }
         const weatherData = await response.json();
