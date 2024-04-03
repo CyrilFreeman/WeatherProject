@@ -47,7 +47,7 @@ fetch("conf.json")
       countryName.textContent = country;
       description.textContent = data.weather[0].description;
       temperature.textContent = `${Math.round(data.main.temp)}°C`;
-      windSpeed.textContent = `Vent: ${data.wind.speed * 3.6} km/h`;
+      windSpeed.textContent = `Vent: ${(Math.round(data.wind.speed * 36))/10} km/h`;
       humidity.textContent = `Humidité: ${data.main.humidity}%`;
       infoIcon.src = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
       infoIcon.style.width = "150px";
