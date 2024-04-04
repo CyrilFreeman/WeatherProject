@@ -12,7 +12,7 @@ fetch("conf.json")
     async function getWeatherData() {
       try {
         const response = await fetch(
-          `/weather?city=${city}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`
         );
         if (!response.ok) {
           if (response.status === 404) {
