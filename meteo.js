@@ -12,7 +12,7 @@ fetch("conf.json")
     async function getWeatherData() {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`
+          `/weather?city=${city}`
         );
         if (!response.ok) {
           if (response.status === 404) {
@@ -59,7 +59,7 @@ fetch("conf.json")
       loader.classList.remove("active");
     }
 
-    setInterval(getWeatherData, 3600000); // 3600000 ms = 1 hour
+    setInterval(getWeatherData, 5000); // 3600000 ms = 1 hour
   })
   .catch((error) => {
     console.error(error);
