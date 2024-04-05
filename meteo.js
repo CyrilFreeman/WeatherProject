@@ -3,6 +3,7 @@ const loader = document.querySelector(".loader-container");
 async function getWeatherData() {
   try {
     const response = await fetch("http://localhost:3000/weather");
+    console.log(response)
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -46,4 +47,4 @@ function populateUI(data) {
   loader.classList.remove("active");
 }
 
-setInterval(getWeatherData, 5000); // Refresh weather data every 5 seconds
+setInterval(getWeatherData, 3600000);

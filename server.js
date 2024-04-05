@@ -1,10 +1,11 @@
 const express = require("express");
-const fetch = require("node-fetch");
+const axios = require("axios");
 const fs = require("fs");
 const cors = require("cors");
 const app = express();
 app.use(cors());
 const port = 3000;
+
 app.get("/weather", async (req, res) => {
   fs.readFile("conf.json", "utf8", async (err, data) => {
     if (err) {
@@ -15,21 +16,21 @@ app.get("/weather", async (req, res) => {
 
     const config = JSON.parse(data);
     const city = config.city;
-    const apiKey = "523d773f11d9f264c85fc0c42f94ddf3"; // replace with your actual API key
+    const apiKey = "523d773f11d9f264c85fc0c42f94ddf3";;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`;
 
     try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`
-      );
-      const weatherData = await response.json();
-      res.send(weatherData);
+      const weatherResponse = await axios.get(url);
+      const weatherData = weatherResponse.data;
+
+      res.json(weatherData);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error fetching weather data");
+      res.status(500).json({ error: 'An error occurred while fetching weather data' });
     }
   });
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });
