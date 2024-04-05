@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+require("dotenv").config();
 const fs = require("fs");
 const cors = require("cors");
 const app = express();
@@ -16,7 +17,8 @@ app.get("/weather", async (req, res) => {
 
     const config = JSON.parse(data);
     const city = config.city;
-    const apiKey = "523d773f11d9f264c85fc0c42f94ddf3";;
+    const apiKey = "523d773f11d9f264c85fc0c42f94ddf3";
+    console.log(apiKey);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=fr&units=metric`;
 
     try {

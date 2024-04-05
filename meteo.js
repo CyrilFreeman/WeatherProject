@@ -34,8 +34,8 @@ function populateUI(data) {
   const windSpeed = document.querySelector(".wind-speed");
   const humidity = document.querySelector(".humidity");
 
-  cityName.textContent = city;
-  countryName.textContent = country;
+  cityName.textContent = data.name;
+  countryName.textContent = data.sys.country;
   description.textContent = data.weather[0].description;
   temperature.textContent = `${Math.round(data.main.temp)}°C`;
   windSpeed.textContent = `Vent: ${Math.round(data.wind.speed * 36) / 10} km/h`;
