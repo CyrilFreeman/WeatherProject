@@ -1,25 +1,28 @@
 const loader = document.querySelector(".loader-container");
+function getWeatherData() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("http://localhost:3000/weather");
+      console.log(response);
 
-async function getWeatherData() {
-  try {
-    const response = await fetch("http://localhost:3000/weather");
-    console.log(response)
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        const cityName = document.querySelector(".city-name");
-        cityName.textContent = `La ville '${city}' n'a pas été trouvée.`;
-        throw new Error(`La ville '${city}' n'a pas été trouvée.`);
-      } else {
-        throw new Error(`Error ${response.status}, ${response.statusText}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          const cityName = document.querySelector(".city-name");
+          cityName.textContent = `La ville '${city}' n'a pas été trouvée.`;
+          throw new Error(`La ville '${city}' n'a pas été trouvée.`);
+        } else {
+          throw new Error(`Error ${response.status}, ${response.statusText}`);
+        }
       }
+      const weatherData = await response.json();
+      populateUI(weatherData);
+      resolve(weatherData);
+    } catch (error) {
+      console.error(error);
+      loader.classList.remove("active");
+      reject(error);
     }
-    const weatherData = await response.json();
-    populateUI(weatherData);
-  } catch (error) {
-    console.error(error);
-    loader.classList.remove("active");
-  }
+  });
 }
 
 getWeatherData();
